@@ -7,6 +7,7 @@ import { galleryApp, galleryLauncher } from './apps/gallery/app';
 import type { App, Launcher } from './types';
 import { appsApp, appsLauncher } from './apps/apps/app';
 import { ingfokanimeApp, ingfokanimeLauncher } from './apps/ingfokanime/app';
+import { photoboohtApp, photoboohtLauncher } from './apps/photobooth/app';
 
 const Launchers: Record<App['id'], Launcher> = {
   [appsApp.id]: appsLauncher,
@@ -16,6 +17,7 @@ const Launchers: Record<App['id'], Launcher> = {
   [mailApp.id]: mailLauncher,
   [notesApp.id]: notesLauncher,
   [galleryApp.id]: galleryLauncher,
+  [photoboohtApp.id]: photoboohtLauncher,
   [ingfokanimeApp.id]: ingfokanimeLauncher,
 };
 

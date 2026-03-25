@@ -7,6 +7,7 @@ import { worksApp } from './apps/works/app';
 import type { App } from './types';
 import { appsApp } from './apps/apps/app';
 import { ingfokanimeApp } from './apps/ingfokanime/app';
+import { photoboohtApp } from './apps/photobooth/app';
 
 const Apps = [
   appsApp,
@@ -16,6 +17,7 @@ const Apps = [
   mailApp,
   notesApp,
   worksApp,
+  photoboohtApp,
   ingfokanimeApp,
 ].reduce<Record<App['id'], App>>((apps, app) => {
   apps[app.id] = app;
