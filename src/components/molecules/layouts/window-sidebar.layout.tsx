@@ -9,6 +9,10 @@ import {
 import { WindowBar } from '../window';
 import type { ReactNode } from 'react';
 import { cn } from '@/utils/misc';
+import { usePageRouter } from '../page-router';
+import { Button } from '@/components/atoms/button';
+import useSettings from '@/hooks/use-settings';
+import { ChevronLeftIcon } from 'lucide-react';
 
 interface ViewProps {
   barSlot?: ReactNode;
@@ -17,12 +21,20 @@ interface ViewProps {
 }
 
 const View = ({ barSlot, contentSlot, children }: ViewProps) => {
+  const { dict } = useSettings();
   const { open } = useSidebar();
+  const { canBack, back } = usePageRouter();
 
   return (
     <>
       <WindowBar className={cn(open ? '' : 'bg-background')}>
         <SidebarTrigger size={'icon'} />
+        {canBack && (
+          <Button variant={'link'} onClick={back}>
+            <ChevronLeftIcon />
+            {dict('back')}
+          </Button>
+        )}
         {barSlot}
       </WindowBar>
       <Sidebar>

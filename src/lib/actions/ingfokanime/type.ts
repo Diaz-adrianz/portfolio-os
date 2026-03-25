@@ -9,6 +9,30 @@ export type Pagination = {
   };
 };
 
+export type AnimeFull = Anime & {
+  relations?: {
+    relation: string;
+    entry: {
+      mal_id: number;
+      type: string;
+      name: string;
+      url: string;
+    }[];
+  }[];
+  theme?: {
+    openings?: string[];
+    endings?: string[];
+  };
+  external?: {
+    name: string;
+    url: string;
+  }[];
+  streaming?: {
+    name: string;
+    url: string;
+  }[];
+};
+
 export type Anime = {
   mal_id: number;
   url: string;

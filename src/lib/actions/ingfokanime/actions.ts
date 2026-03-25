@@ -3,7 +3,7 @@
 import { errorResponseAction } from '@/lib/server/error-response';
 import { rateLimitAction } from '@/lib/server/rate-limit';
 import axios from 'axios';
-import { Anime, Pagination } from './type';
+import { Anime, AnimeFull, Pagination } from './type';
 import { ActionPaginationResponse, ActionResponse } from '../type';
 
 export type SearchAnimeItem = Pick<
@@ -145,4 +145,26 @@ async function schedulesAnime(
   }
 }
 
-export { searchAnime, topAnime, schedulesAnime };
+export type DetailAnime = AnimeFull;
+
+async function detailAnime(
+  id: string
+): Promise<ActionResponse<DetailAnime | null>> {
+  try {
+    await rateLimitAction({ key: 'ingfokanime.detailAnime', limit: 12 });
+
+    const { data } = await axios.get<{ data: AnimeFull }>(
+      `${process.env.INGFOKANIME_API}/anime/${id}/full`
+    );
+
+    return {
+      status: true,
+      message: 'Success',
+      data: data.data,
+    };
+  } catch (err) {
+    return errorResponseAction(err);
+  }
+}
+
+export { searchAnime, topAnime, schedulesAnime, detailAnime };
