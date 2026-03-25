@@ -1,3 +1,5 @@
+import { NextRequest } from 'next/server';
+
 const rateLimitMap = new Map<string, { count: number; lastReset: number }>();
 
 type RateLimitOptions = {
@@ -14,7 +16,7 @@ class RateLimitError extends Error {
   }
 }
 
-async function rateLimit(req: Request, options: RateLimitOptions = {}) {
+async function rateLimit(req: NextRequest, options: RateLimitOptions = {}) {
   const { limit = 4, windowMs = 60 * 1000, key } = options;
 
   const ip =

@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { rateLimit } from '@/lib/server/rate-limit';
 import { errorResponse } from '@/lib/server/error-response';
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     await rateLimit(req);
 
