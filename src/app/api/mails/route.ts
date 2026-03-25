@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { rateLimit } from '@/lib/server/rate-limit';
-import { errorResponse } from '@/lib/server/error-response';
+import { rateLimitApi } from '@/lib/server/rate-limit';
+import { errorResponseApi } from '@/lib/server/error-response';
 
 export async function POST(req: NextRequest) {
   try {
-    await rateLimit(req);
+    rateLimitApi(req);
 
     const formData = await req.formData();
 
@@ -22,6 +22,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (err) {
-    return errorResponse(err);
+    return errorResponseApi(err);
   }
 }

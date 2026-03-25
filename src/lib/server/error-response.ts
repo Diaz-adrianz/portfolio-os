@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { RateLimitError } from './rate-limit';
+import { ActionResponse } from '../actions/type';
 
-function errorResponse(err: any) {
+function errorResponseCore(err: any) {
   let status = 500,
     message = 'Internal server error';
 
@@ -15,7 +16,19 @@ function errorResponse(err: any) {
     message = 'Validasi gagal';
   }
 
+  return { status, message };
+}
+
+function errorResponseApi(err: any) {
+  const { status, message } = errorResponseCore(err);
+
   return NextResponse.json({ message }, { status });
 }
 
-export { errorResponse };
+function errorResponseAction(err: any): ActionResponse<null> {
+  const { message } = errorResponseCore(err);
+
+  return { status: false, message, data: null };
+}
+
+export { errorResponseApi, errorResponseAction };
