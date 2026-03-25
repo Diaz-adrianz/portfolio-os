@@ -6,6 +6,7 @@ const rateLimitMap = new Map<string, { count: number; lastReset: number }>();
 type RateLimitOptions = {
   limit?: number;
   windowMs?: number;
+  key?: string;
 };
 
 class RateLimitError extends Error {
@@ -47,7 +48,8 @@ function rateLimitApi(req: NextRequest, options?: RateLimitOptions) {
     req.headers.get('x-real-ip') ||
     'unknown';
 
-  rateLimitCore(ip, options);
+  const key = options?.key ? `${ip}:${options.key}` : ip;
+  rateLimitCore(key, options);
 }
 
 async function rateLimitAction(options?: RateLimitOptions) {
@@ -56,7 +58,8 @@ async function rateLimitAction(options?: RateLimitOptions) {
   const ip =
     h.get('x-forwarded-for')?.split(',')[0] || h.get('x-real-ip') || 'unknown';
 
-  rateLimitCore(ip, options);
+  const key = options?.key ? `${ip}:${options.key}` : ip;
+  rateLimitCore(key, options);
 }
 
 export { RateLimitError, rateLimitApi, rateLimitAction };
