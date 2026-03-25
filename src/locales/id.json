@@ -1,0 +1,66 @@
+{
+  "back": "Kembali",
+  "at": "Di",
+  "now": "Sekarang",
+  "get": "Dapatkan",
+  "all": "Semua",
+  "or": "Atau",
+
+  "welcomeTo": "Selamat datang di {{name}}",
+
+  "gettingThingsReadyForYou": "Mempersiapkan segala sesuatu untukmu",
+
+  "copyright": "©2026. Portofolio Menakjubkan yand Didesain & Dirancang oleh {{name}}",
+  "desktopExperience": "Gunakan desktop untuk pengalaman yang lebih baik",
+
+  "unlock": "Buka",
+  "swipeToUnlock": "Geser untuk membuka",
+
+  "about": "Tentang",
+  "theme": "Tema",
+  "languange": "Bahasa",
+  "fullscreen": "Layar penuh",
+  "exitFullscreen": "Hentikan layar penuh",
+  "lockscreen": "Kunci layar",
+  "hardReset": "Reset paksa",
+  "shutdown": "Matikan",
+
+  "followMe": "Ikuti saya",
+  "socials": "Media sosial",
+
+  "viewResume": "Lihat resume",
+  "timezone": "Zona waktu",
+  "location": "Lokasi",
+  "age": "Usia",
+  "years": "tahun",
+  "gender": "Gender",
+
+  "companyProfile": "Profil perusahaan",
+  "description": "Deskripsi",
+
+  "sent": "Terkirim",
+  "inbox": "Kotak masuk",
+
+  "to": "Kepada",
+
+  "newMessage": "Pesan baru",
+  "send": "Kirim",
+  "name": "Nama",
+  "email": "Surel",
+  "subject": "Subjek",
+  "message": "Pesan",
+
+  "sendingTitle": "Mengirim pesan kamu",
+  "sendingMsg": "Tunggu sebentar",
+  "sendingSuccessTitle": "Pesan terkirim",
+  "sendingSuccessMsg": "Terima kasih, {{name}}!",
+  "sendingFailedTitle": "Pesan gagal dikirim",
+  "sendingFailedMsg": "Terjadi kesalahan saat mengirim pesan",
+  "required": "tidak boleh kosong",
+  "invalidFormat": "tidak valid",
+  "validationFailed": "Validasi gagal",
+
+  "notesWelcomeDescription": "Jelajahi menu sidebar untuk melihat semua catatan",
+
+  "setAsWallpaper": "Atur sebagai wallpaper"
+}

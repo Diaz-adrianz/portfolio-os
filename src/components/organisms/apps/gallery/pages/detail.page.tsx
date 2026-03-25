@@ -1,0 +1,60 @@
+import { Button } from '@/components/atoms/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/atoms/dropdown-menu';
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemHeader,
+} from '@/components/atoms/item';
+import MediaData from '@/data/media.data';
+import useSettings from '@/hooks/use-settings';
+import { MoreVerticalIcon } from 'lucide-react';
+
+const DetailPage = ({ id }: { id: string }) => {
+  const { setWallpaper, dict } = useSettings();
+  const media = MediaData.find((d) => d.id == id);
+
+  return (
+    <div>
+      {media && (
+        <>
+          <Item>
+            <ItemContent>
+              <ItemHeader>{media.title}</ItemHeader>
+            </ItemContent>
+            <ItemActions>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size={'icon'}>
+                    <MoreVerticalIcon />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem onClick={() => setWallpaper(media.src)}>
+                    {dict('setAsWallpaper')}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </ItemActions>
+          </Item>
+          <div className="relative w-full">
+            {media?.type == 'image' && (
+              <img
+                src={media.src}
+                alt=""
+                className="size-full object-contain"
+              />
+            )}
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default DetailPage;

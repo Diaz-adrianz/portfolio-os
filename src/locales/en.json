@@ -1,0 +1,66 @@
+{
+  "back": "Back",
+  "at": "At",
+  "now": "Now",
+  "get": "Get",
+  "all": "All",
+  "or": "Or",
+
+  "welcomeTo": "Welcome to {{name}}",
+
+  "gettingThingsReadyForYou": "Getting things ready for you",
+
+  "copyright": "©2026. A Stunning Portfolio Designed & Built by {{name}}",
+  "desktopExperience": "Use desktop for better experience",
+
+  "unlock": "Unlock",
+  "swipeToUnlock": "Swipe to unlock",
+
+  "about": "About",
+  "theme": "Theme",
+  "languange": "Languange",
+  "fullscreen": "Full screen",
+  "exitFullscreen": "Exit full screen",
+  "lockscreen": "Lock screen",
+  "hardReset": "Hard reset",
+  "shutdown": "Shut down",
+
+  "followMe": "Follow me",
+  "socials": "Social media",
+
+  "viewResume": "View resume",
+  "timezone": "Timezone",
+  "location": "Location",
+  "age": "Age",
+  "years": "years",
+  "gender": "Gender",
+
+  "companyProfile": "Company profile",
+  "description": "Description",
+
+  "sent": "Sent",
+  "inbox": "Inbox",
+
+  "to": "To",
+
+  "newMessage": "New message",
+  "send": "Send",
+  "name": "Name",
+  "email": "Email",
+  "subject": "Subject",
+  "message": "Message",
+
+  "sendingTitle": "Sending your message",
+  "sendingMsg": "Please wait a moment",
+  "sendingSuccessTitle": "Message sent",
+  "sendingSuccessMsg": "Thank you, {{name}}!",
+  "sendingFailedTitle": "Message failed",
+  "sendingFailedMsg": "Something wrong while sending your messaage",
+  "required": "cannot be empty",
+  "invalidFormat": "invalid",
+  "validationFailed": "Validation failed",
+
+  "notesWelcomeDescription": "Browse the sidebar to discover notes",
+
+  "setAsWallpaper": "Set as wallpaper"
+}
