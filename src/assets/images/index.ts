@@ -7,6 +7,8 @@ import IconText from './icon-text.png';
 import IconTools from './icon-tools.png';
 import IconApss from './icon-apps.png';
 
+import IconIngfokanime from './icon-ingfokanime.png';
+
 import IlusNotes from './ilus-notes.svg';
 
 export {
@@ -18,5 +20,8 @@ export {
   IconText,
   IconTools,
   IconApss,
-  IlusNotes,
 };
+
+export { IconIngfokanime };
+
+export { IlusNotes };

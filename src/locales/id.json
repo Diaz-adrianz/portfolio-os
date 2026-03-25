@@ -7,6 +7,8 @@
   "or": "Atau",
 
   "welcomeTo": "Selamat datang di {{name}}",
+  "searchHere": "Cari disini",
+  "showMore": "Tampilkan lebih banyak",
 
   "gettingThingsReadyForYou": "Mempersiapkan segala sesuatu untukmu",
 
@@ -62,5 +64,8 @@
 
   "notesWelcomeDescription": "Jelajahi menu sidebar untuk melihat semua catatan",
 
-  "setAsWallpaper": "Atur sebagai wallpaper"
+  "setAsWallpaper": "Atur sebagai wallpaper",
+
+  "InternalServerError": "Server bermasalah",
+  "TooManyRequest": "Terlalu banyak permintaan"
 }

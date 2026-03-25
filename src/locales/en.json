@@ -7,6 +7,8 @@
   "or": "Or",
 
   "welcomeTo": "Welcome to {{name}}",
+  "searchHere": "Search here",
+  "showMore": "Show more",
 
   "gettingThingsReadyForYou": "Getting things ready for you",
 
@@ -62,5 +64,8 @@
 
   "notesWelcomeDescription": "Browse the sidebar to discover notes",
 
-  "setAsWallpaper": "Set as wallpaper"
+  "setAsWallpaper": "Set as wallpaper",
+
+  "InternalServerError": "Internal server error",
+  "TooManyRequest": "Too many request"
 }

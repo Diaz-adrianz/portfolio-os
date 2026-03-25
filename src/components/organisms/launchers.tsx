@@ -6,6 +6,7 @@ import { notesApp, notesLauncher } from './apps/notes/app';
 import { galleryApp, galleryLauncher } from './apps/gallery/app';
 import type { App, Launcher } from './types';
 import { appsApp, appsLauncher } from './apps/apps/app';
+import { ingfokanimeApp, ingfokanimeLauncher } from './apps/ingfokanime/app';
 
 const Launchers: Record<App['id'], Launcher> = {
   [appsApp.id]: appsLauncher,
@@ -15,6 +16,7 @@ const Launchers: Record<App['id'], Launcher> = {
   [mailApp.id]: mailLauncher,
   [notesApp.id]: notesLauncher,
   [galleryApp.id]: galleryLauncher,
+  [ingfokanimeApp.id]: ingfokanimeLauncher,
 };
 
 const LauncherList: Launcher[] = Object.values(Launchers);

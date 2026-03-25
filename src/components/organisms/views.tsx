@@ -14,6 +14,8 @@ import { mailApp } from './apps/mail/app';
 import MailView from './apps/mail/view';
 import { appsApp } from './apps/apps/app';
 import AppsView from './apps/apps/view';
+import { ingfokanimeApp } from './apps/ingfokanime/app';
+import IngfokanimeView from './apps/ingfokanime/view';
 
 const Views: Record<App['id'], ReactNode> = {
   [appsApp.id]: <AppsView />,
@@ -23,6 +25,7 @@ const Views: Record<App['id'], ReactNode> = {
   [worksApp.id]: <WorksView />,
   [achievementsApp.id]: <AchievementsView />,
   [mailApp.id]: <MailView />,
+  [ingfokanimeApp.id]: <IngfokanimeView />,
 };
 
 export default Views;

@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { cn } from '@/utils/misc';
+import useSettings from '@/hooks/use-settings';
 
 function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
   return (
@@ -16,4 +17,32 @@ function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
   );
 }
 
-export { Input };
+function InputSearch({
+  onEnter,
+  ...props
+}: { onEnter: (value: string) => void } & React.ComponentProps<'input'>) {
+  const { dict } = useSettings();
+  const [value, setValue] = React.useState<string>('');
+
+  return (
+    <form
+      className="flex gap-2"
+      onSubmit={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (onEnter) onEnter(value);
+      }}
+    >
+      <div className="grow">
+        <Input
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          placeholder={`${dict('searchHere')}...`}
+          {...props}
+        />
+      </div>
+    </form>
+  );
+}
+
+export { Input, InputSearch };
