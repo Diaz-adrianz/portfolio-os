@@ -1,7 +1,15 @@
 'use client';
 
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from 'react';
 import { motion } from 'motion/react';
+import { ScrollArea } from '../atoms/scroll-area';
 
 export type Route = string;
 export type Routes = Record<
@@ -88,22 +96,40 @@ const matchRoute = (route: string, routes: Routes) => {
 const PageRouterView = ({ routes }: { routes: Routes }) => {
   const { route } = usePageRouter();
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollTo = (
+    v: number | 'top' | 'bottom',
+    behavior: 'smooth' | 'instant' = 'smooth'
+  ) => {
+    scrollRef.current?.scrollTo({
+      top: v == 'top' ? 0 : v == 'bottom' ? scrollRef.current.scrollHeight : v,
+      left: 0,
+      behavior,
+    });
+  };
+
+  useEffect(() => {
+    scrollTo('top', 'instant');
+  }, [route]);
+
   const matched = matchRoute(route, routes);
   if (!matched) return null;
 
   const { render, params } = matched;
 
   return (
-    <motion.div
-      key={route}
-      initial={{ opacity: 0, translateY: 24, scaleY: 1.2 }}
-      animate={{ opacity: 1, translateY: 0, scaleY: 1 }}
-      exit={{ opacity: 0, translateY: 24 }}
-      transition={{ duration: 0.2 }}
-      style={{ transformOrigin: 'top center' }}
-    >
-      {render(params)}
-    </motion.div>
+    <ScrollArea ref={scrollRef} className="bg-muted h-full">
+      <motion.div
+        key={route}
+        initial={{ opacity: 0, translateY: 24, scaleY: 1.2 }}
+        animate={{ opacity: 1, translateY: 0, scaleY: 1 }}
+        exit={{ opacity: 0, translateY: 24 }}
+        transition={{ duration: 0.2 }}
+        style={{ transformOrigin: 'top center' }}
+      >
+        {render(params)}
+      </motion.div>
+    </ScrollArea>
   );
 };
 

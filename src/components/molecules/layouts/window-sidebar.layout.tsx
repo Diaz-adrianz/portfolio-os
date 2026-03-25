@@ -9,7 +9,6 @@ import {
 import { WindowBar } from '../window';
 import type { ReactNode } from 'react';
 import { cn } from '@/utils/misc';
-import { ScrollArea } from '@/components/atoms/scroll-area';
 
 interface ViewProps {
   barSlot?: ReactNode;
@@ -31,15 +30,13 @@ const View = ({ barSlot, contentSlot, children }: ViewProps) => {
         <SidebarContent className="p-2">{contentSlot}</SidebarContent>
       </Sidebar>
       <SidebarInset>
-        <ScrollArea className="bg-muted h-full">
-          <div
-            className={cn(
-              'sticky top-0 z-10 h-10 shadow-sm',
-              open && 'bg-background'
-            )}
-          ></div>
-          {children}
-        </ScrollArea>
+        <div
+          className={cn(
+            'absolute top-0 z-10 h-10 shadow-sm',
+            open && 'bg-background'
+          )}
+        ></div>
+        <div className="h-full pt-10">{children}</div>
       </SidebarInset>
     </>
   );
