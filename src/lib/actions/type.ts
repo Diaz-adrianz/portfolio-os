@@ -7,8 +7,8 @@ export interface ActionResponse<T> {
 export interface ActionPagination {
   page: number;
   limit: number;
-  totalItems: number;
-  totalPages: number;
+  totalItems?: number;
+  totalPages?: number;
 }
 
 export interface ActionPaginationResponse<

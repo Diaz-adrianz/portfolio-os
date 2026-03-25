@@ -4,7 +4,7 @@ import { ActionResponse } from '../actions/type';
 
 function errorResponseCore(err: any) {
   let status = 500,
-    message = 'Internal server error';
+    message = 'InternalServerError';
 
   if (process.env.NODE_ENV == 'development') console.log(err);
 
@@ -13,7 +13,7 @@ function errorResponseCore(err: any) {
     message = err.message;
   } else if (err.name == 'ValidationError') {
     status = 422;
-    message = 'Validasi gagal';
+    message = 'ValidationFailed';
   }
 
   return { status, message };
