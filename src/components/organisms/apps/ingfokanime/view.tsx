@@ -26,6 +26,11 @@ import { Button } from '@/components/atoms/button';
 const menu: { to: string; icon: LucideIcon; label: Translation }[] = [
   {
     to: 'index',
+    icon: CalendarIcon,
+    label: { en: 'Schedule', id: 'Jadwal' },
+  },
+  {
+    to: 'search',
     icon: SearchIcon,
     label: { en: 'Search', id: 'Pencarian' },
   },
@@ -33,11 +38,6 @@ const menu: { to: string; icon: LucideIcon; label: Translation }[] = [
     to: 'top',
     icon: TrophyIcon,
     label: { en: 'Top', id: 'Teratas' },
-  },
-  {
-    to: 'schedule',
-    icon: CalendarIcon,
-    label: { en: 'Schedule', id: 'Jadwal' },
   },
 ];
 
