@@ -1,5 +1,4 @@
 import { Button } from '@/components/atoms/button';
-import { InputSearch } from '@/components/atoms/input';
 import {
   Item,
   ItemActions,
@@ -12,19 +11,18 @@ import { Skeleton } from '@/components/atoms/skeleton';
 import { usePageRouter } from '@/components/molecules/page-router';
 import useNotification from '@/hooks/use-notiification';
 import useSettings from '@/hooks/use-settings';
-import { searchAnime } from '@/lib/actions/ingfokanime/actions';
+import { topAnime } from '@/lib/actions/ingfokanime/actions';
 import { Anime } from '@/lib/actions/ingfokanime/type';
 import { ActionPagination } from '@/lib/actions/type';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const IndexPage = () => {
+const TopPage = () => {
   const { push } = usePageRouter(),
     { notify } = useNotification(),
     { dict, tr } = useSettings();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [query, setQuery] = useState('');
 
   const [items, setItems] = useState<Anime[]>([]);
   const [paginate, setPaginate] = useState<ActionPagination>({
@@ -32,10 +30,10 @@ const IndexPage = () => {
     limit: 20,
   });
 
-  const _getData = async (q: string, page = 1) => {
+  const _getData = async (page = 1) => {
     setIsLoading(true);
 
-    const res = await searchAnime(q, page, paginate.limit);
+    const res = await topAnime(page, paginate.limit);
 
     if (res.status && res.data) {
       const { items = [], ...data } = res.data;
@@ -49,20 +47,15 @@ const IndexPage = () => {
     setIsLoading(false);
   };
 
+  useEffect(() => {
+    _getData();
+  }, []);
+
   return (
     <div className="p-4">
       <h3 className="typo-title-2 mb-4">
-        {tr({ en: 'Search Anime', id: 'Pencarian Anime' })}
+        {tr({ en: 'Top Anime', id: 'Anime Teratas' })}
       </h3>
-
-      <div className="mb-4">
-        <InputSearch
-          onEnter={(v) => {
-            setQuery(v);
-            _getData(v, 1);
-          }}
-        />
-      </div>
 
       <div className="flex flex-wrap gap-2">
         {isLoading
@@ -83,11 +76,16 @@ const IndexPage = () => {
                   />
                 </ItemMedia>
                 <ItemContent>
-                  <ItemTitle>
-                    {item.title ??
-                      item.title_english ??
-                      item.title_japanese ??
-                      '-'}
+                  <ItemTitle className="flex gap-1">
+                    <p className="text-primary font-bold">
+                      #{item.rank ?? '-'}
+                    </p>
+                    <p className="line-clamp-1">
+                      {item.title ??
+                        item.title_english ??
+                        item.title_japanese ??
+                        '-'}
+                    </p>
                   </ItemTitle>
                   <ItemDescription>
                     {item.genres?.map((genre) => genre.name).join(', ')}
@@ -109,7 +107,7 @@ const IndexPage = () => {
         <Button
           variant="outline"
           disabled={isLoading || paginate.page <= 1}
-          onClick={() => _getData(query, paginate.page - 1)}
+          onClick={() => _getData(paginate.page - 1)}
           size={'icon'}
         >
           <ChevronLeftIcon />
@@ -122,7 +120,7 @@ const IndexPage = () => {
         <Button
           variant="outline"
           disabled={isLoading || paginate.page >= (paginate.totalPages ?? 1)}
-          onClick={() => _getData(query, paginate.page + 1)}
+          onClick={() => _getData(paginate.page + 1)}
           size={'icon'}
         >
           <ChevronRightIcon />
@@ -132,4 +130,4 @@ const IndexPage = () => {
   );
 };
 
-export default IndexPage;
+export default TopPage;

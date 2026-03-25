@@ -6,7 +6,13 @@ import {
 import { AnimatePresence } from 'motion/react';
 import { useWindow } from '@/components/molecules/window';
 import IngfokanimeRoutes from './routes';
-import { CalendarIcon, LucideIcon, SearchIcon, TrophyIcon } from 'lucide-react';
+import {
+  CalendarIcon,
+  GlobeIcon,
+  LucideIcon,
+  SearchIcon,
+  TrophyIcon,
+} from 'lucide-react';
 import { Translation } from '@/data/options/locale.option';
 import WindowSidebarLayout from '@/components/molecules/layouts/window-sidebar.layout';
 import {
@@ -15,6 +21,7 @@ import {
   SidebarMenuItem,
 } from '@/components/atoms/sidebar';
 import useSettings from '@/hooks/use-settings';
+import { Button } from '@/components/atoms/button';
 
 const menu: { to: string; icon: LucideIcon; label: Translation }[] = [
   {
@@ -40,6 +47,13 @@ const View = () => {
 
   return (
     <WindowSidebarLayout
+      barSlot={
+        <Button variant={'link'} className="ms-auto" asChild>
+          <a href="https://ingfokanime.netlify.app" target="_blank">
+            <GlobeIcon /> Website
+          </a>
+        </Button>
+      }
       contentSlot={
         <SidebarMenu>
           {menu.map((item, i) => (
