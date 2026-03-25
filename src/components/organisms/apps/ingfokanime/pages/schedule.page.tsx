@@ -14,7 +14,7 @@ import useNotification from '@/hooks/use-notiification';
 import useSettings from '@/hooks/use-settings';
 import {
   schedulesAnime,
-  SchedulesAnimeData,
+  SchedulesAnimeItem,
 } from '@/lib/actions/ingfokanime/actions';
 import { ActionPagination } from '@/lib/actions/type';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
@@ -29,7 +29,7 @@ const SchedulePage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [day, setDay] = useState(moment().format('dddd').toLowerCase());
 
-  const [items, setItems] = useState<SchedulesAnimeData[]>([]);
+  const [items, setItems] = useState<SchedulesAnimeItem[]>([]);
   const [paginate, setPaginate] = useState<ActionPagination>({
     page: 1,
     limit: 20,
@@ -59,7 +59,7 @@ const SchedulePage = () => {
   return (
     <div className="p-4">
       <h3 className="typo-title-2 mb-4">
-        {tr({ en: 'Top Anime', id: 'Anime Teratas' })}
+        {tr({ en: 'Schedule Anime', id: 'Jadwal Anime' })}
       </h3>
 
       <div className="mb-4 flex flex-wrap items-center gap-2">

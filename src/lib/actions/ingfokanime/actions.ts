@@ -6,11 +6,16 @@ import axios from 'axios';
 import { Anime, Pagination } from './type';
 import { ActionPaginationResponse, ActionResponse } from '../type';
 
+export type SearchAnimeItem = Pick<
+  Anime,
+  'mal_id' | 'images' | 'title' | 'title_english' | 'title_japanese' | 'genres'
+>;
+
 async function searchAnime(
   q: string,
   page = 1,
   limit = 10
-): Promise<ActionResponse<ActionPaginationResponse<Anime> | null>> {
+): Promise<ActionResponse<ActionPaginationResponse<SearchAnimeItem> | null>> {
   try {
     await rateLimitAction({ key: 'ingfokanime.searchAnime', limit: 12 });
 
@@ -22,11 +27,18 @@ async function searchAnime(
       status: true,
       message: 'Success',
       data: {
-        items: data.data,
+        items: data.data.map((d) => ({
+          mal_id: d.mal_id,
+          images: d.images,
+          title: d.title,
+          title_english: d.title_english,
+          title_japanese: d.title_japanese,
+          genres: d.genres,
+        })),
         page: data.pagination.current_page,
         limit: data.pagination.items.per_page,
         totalItems: data.pagination.items.total,
-        totalPages: Math.floor(
+        totalPages: Math.ceil(
           data.pagination.items.total / data.pagination.items.per_page
         ),
       },
@@ -36,10 +48,21 @@ async function searchAnime(
   }
 }
 
+export type TopAnimeItem = Pick<
+  Anime,
+  | 'mal_id'
+  | 'images'
+  | 'title'
+  | 'title_english'
+  | 'title_japanese'
+  | 'rank'
+  | 'favorites'
+>;
+
 async function topAnime(
   page = 1,
   limit = 10
-): Promise<ActionResponse<ActionPaginationResponse<Anime> | null>> {
+): Promise<ActionResponse<ActionPaginationResponse<TopAnimeItem> | null>> {
   try {
     await rateLimitAction({ key: 'ingfokanime.topAnime', limit: 12 });
 
@@ -51,11 +74,19 @@ async function topAnime(
       status: true,
       message: 'Success',
       data: {
-        items: data.data,
+        items: data.data.map((d) => ({
+          mal_id: d.mal_id,
+          images: d.images,
+          title: d.title,
+          title_english: d.title_english,
+          title_japanese: d.title_japanese,
+          rank: d.rank,
+          favorites: d.favorites,
+        })),
         page: data.pagination.current_page,
         limit: data.pagination.items.per_page,
         totalItems: data.pagination.items.total,
-        totalPages: Math.floor(
+        totalPages: Math.ceil(
           data.pagination.items.total / data.pagination.items.per_page
         ),
       },
@@ -65,7 +96,7 @@ async function topAnime(
   }
 }
 
-export type SchedulesAnimeData = Pick<
+export type SchedulesAnimeItem = Pick<
   Anime,
   | 'mal_id'
   | 'images'
@@ -80,7 +111,7 @@ async function schedulesAnime(
   page = 1,
   limit = 10
 ): Promise<
-  ActionResponse<ActionPaginationResponse<SchedulesAnimeData> | null>
+  ActionResponse<ActionPaginationResponse<SchedulesAnimeItem> | null>
 > {
   try {
     await rateLimitAction({ key: 'ingfokanime.schedulesAnime', limit: 12 });

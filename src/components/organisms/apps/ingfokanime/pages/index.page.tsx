@@ -12,8 +12,10 @@ import { Skeleton } from '@/components/atoms/skeleton';
 import { usePageRouter } from '@/components/molecules/page-router';
 import useNotification from '@/hooks/use-notiification';
 import useSettings from '@/hooks/use-settings';
-import { searchAnime } from '@/lib/actions/ingfokanime/actions';
-import { Anime } from '@/lib/actions/ingfokanime/type';
+import {
+  searchAnime,
+  SearchAnimeItem,
+} from '@/lib/actions/ingfokanime/actions';
 import { ActionPagination } from '@/lib/actions/type';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { useState } from 'react';
@@ -26,7 +28,7 @@ const IndexPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState('');
 
-  const [items, setItems] = useState<Anime[]>([]);
+  const [items, setItems] = useState<SearchAnimeItem[]>([]);
   const [paginate, setPaginate] = useState<ActionPagination>({
     page: 1,
     limit: 20,
