@@ -1,4 +1,5 @@
 import { Button } from '@/components/atoms/button';
+import { ButtonGroup } from '@/components/atoms/button-group';
 import { InputSearch } from '@/components/atoms/input';
 import {
   Item,
@@ -12,16 +13,22 @@ import { Skeleton } from '@/components/atoms/skeleton';
 import { usePageRouter } from '@/components/molecules/page-router';
 import useNotification from '@/hooks/use-notiification';
 import useSettings from '@/hooks/use-settings';
+import useWindows from '@/hooks/use-windows';
 import {
   searchAnime,
   SearchAnimeItem,
 } from '@/lib/actions/ingfokanime/actions';
 import { ActionPagination } from '@/lib/actions/type';
-import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
+import {
+  ArrowUpRightIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from 'lucide-react';
 import { useState } from 'react';
 
 const SearchPage = () => {
   const { push } = usePageRouter(),
+    { open } = useWindows(),
     { notify } = useNotification(),
     { dict, tr } = useSettings();
 
@@ -96,12 +103,23 @@ const SearchPage = () => {
                   </ItemDescription>
                 </ItemContent>
                 <ItemActions>
-                  <Button
-                    variant={'tinted'}
-                    onClick={() => push(`detail/${item.mal_id}`)}
-                  >
-                    {dict('get')}
-                  </Button>
+                  <ButtonGroup>
+                    <Button
+                      variant={'tinted'}
+                      onClick={() => push(`detail/${item.mal_id}`)}
+                    >
+                      {dict('get')}
+                    </Button>
+                    <Button
+                      variant={'tinted'}
+                      onClick={() =>
+                        open('INGFOKANIME', `detail/${item.mal_id}`)
+                      }
+                      size={'icon'}
+                    >
+                      <ArrowUpRightIcon />
+                    </Button>
+                  </ButtonGroup>
                 </ItemActions>
               </Item>
             ))}
