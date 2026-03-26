@@ -24,12 +24,11 @@ import {
   SquareCenterlineDashedHorizontalIcon,
   WandSparklesIcon,
 } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 import { PHOTO_RATIO, PHOTOS_COUNT, usePhotoboothContext } from '../view';
 import { AspectRatio } from '@/components/atoms/aspect-ratio';
 import { Alert, AlertDescription, AlertTitle } from '@/components/atoms/alert';
-import useCamera from '@/hooks/use-camera';
 
 const timerOptions: Option[] = [
   {
@@ -50,10 +49,15 @@ const IndexPage = () => {
   const { push } = usePageRouter();
   const { tr } = useSettings();
   const { photos, setPhotos } = usePhotoboothContext();
-  const { cameraAllowed, deviceId, devices, setDeviceId } = useCamera();
 
   const webcamRef = useRef<Webcam>(null);
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
+
+  const [cameraAllowed, setCameraAllowed] = useState(true);
+
+  // data
+  const [devices, setDevices] = useState<MediaDeviceInfo[]>([]),
+    [deviceId, setDeviceId] = useState<string>('');
 
   // settings
   const [mirrored, setMirrored] = useState(false),
@@ -61,6 +65,33 @@ const IndexPage = () => {
 
   const [isTaking, setIsTaking] = useState(false),
     [countdown, setCountdown] = useState<number | null>(null);
+
+  const _setCameraPermission = async () => {
+    let p;
+    try {
+      await navigator.mediaDevices.getUserMedia({ video: true });
+      p = 'granted';
+    } catch (err: any) {
+      if (err.name === 'NotAllowedError') p = 'denied';
+      else if (err.name === 'NotFoundError') p = 'no-device';
+      else p = 'error';
+    }
+
+    setCameraAllowed(p == 'granted');
+  };
+
+  useEffect(() => {
+    navigator.mediaDevices.enumerateDevices().then((list) => {
+      const videoDevices = list.filter((d) => d.kind === 'videoinput');
+      setDevices(videoDevices);
+
+      if (videoDevices.length > 0) {
+        setDeviceId(videoDevices[0].deviceId);
+      }
+
+      _setCameraPermission();
+    });
+  }, []);
 
   const _clearPhotos = () => {
     setPhotos([]);
@@ -204,7 +235,7 @@ const IndexPage = () => {
                 </div>
               </CarouselItem>
             ))}
-            {photos.length < PHOTOS_COUNT && cameraAllowed && (
+            {photos.length < PHOTOS_COUNT && (
               <CarouselItem>
                 <div className="mx-auto w-full max-w-3xl px-4">
                   <AspectRatio ratio={PHOTO_RATIO}>
