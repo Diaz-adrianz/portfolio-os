@@ -186,7 +186,7 @@ const IndexPage = () => {
         )}
       </div>
 
-      <div className="bg-background/40 relative rounded-xl px-4">
+      <div className="bg-background dark:bg-background/40 relative rounded-xl px-4">
         {isTaking && (
           <div className="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 text-center">
             <h3 className="typo-display">{countdown}</h3>
