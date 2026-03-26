@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/atoms/dropdown-menu';
 import { Separator } from '@/components/atoms/separator';
+import { usePageRouter } from '@/components/molecules/page-router';
 import { Option } from '@/data/options/option';
 import useSettings from '@/hooks/use-settings';
 import {
@@ -25,8 +26,8 @@ import {
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
-
-const PHOTOS_COUNT = 4;
+import { PHOTO_RATIO, PHOTOS_COUNT, usePhotoboothContext } from '../view';
+import { AspectRatio } from '@/components/atoms/aspect-ratio';
 
 const timerOptions: Option[] = [
   {
@@ -44,15 +45,16 @@ const timerOptions: Option[] = [
 ];
 
 const IndexPage = () => {
+  const { push } = usePageRouter();
   const { tr } = useSettings();
+  const { photos, setPhotos } = usePhotoboothContext();
 
   const webcamRef = useRef<Webcam>(null);
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
 
   // data
   const [devices, setDevices] = useState<MediaDeviceInfo[]>([]),
-    [deviceId, setDeviceId] = useState<string>(''),
-    [photos, setPhotos] = useState<string[]>([]);
+    [deviceId, setDeviceId] = useState<string>('');
 
   // settings
   const [mirrored, setMirrored] = useState(false),
@@ -168,8 +170,10 @@ const IndexPage = () => {
 
         {!isTaking && photos.length == PHOTOS_COUNT && (
           <>
-            <Button>
-              <WandSparklesIcon /> Customize
+            <Button asChild>
+              <a href="#" onClick={() => push('custom')}>
+                <WandSparklesIcon /> Customize
+              </a>
             </Button>
             <Button
               variant={'destructive'}
@@ -196,24 +200,28 @@ const IndexPage = () => {
           <CarouselContent>
             {photos.map((item, i) => (
               <CarouselItem key={i}>
-                <div className="mx-auto aspect-square w-full max-w-sm overflow-hidden">
-                  <img src={item} alt="" className="size-full object-cover" />
+                <div className="mx-auto w-full max-w-3xl px-4">
+                  <AspectRatio ratio={PHOTO_RATIO}>
+                    <img src={item} alt="" className="size-full object-cover" />
+                  </AspectRatio>
                 </div>
               </CarouselItem>
             ))}
             {photos.length < PHOTOS_COUNT && (
               <CarouselItem>
-                <div className="mx-auto aspect-square w-full max-w-sm overflow-hidden">
-                  <Webcam
-                    ref={webcamRef}
-                    audio={false}
-                    screenshotFormat="image/png"
-                    videoConstraints={{
-                      deviceId: deviceId ? { exact: deviceId } : undefined,
-                    }}
-                    mirrored={mirrored}
-                    className="size-full object-cover"
-                  />
+                <div className="mx-auto w-full max-w-3xl px-4">
+                  <AspectRatio ratio={PHOTO_RATIO}>
+                    <Webcam
+                      ref={webcamRef}
+                      audio={false}
+                      screenshotFormat="image/png"
+                      videoConstraints={{
+                        deviceId: deviceId ? { exact: deviceId } : undefined,
+                      }}
+                      mirrored={mirrored}
+                      className="size-full object-cover"
+                    />
+                  </AspectRatio>
                 </div>
               </CarouselItem>
             )}
