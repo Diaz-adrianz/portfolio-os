@@ -8,7 +8,7 @@ const photoboohtApp: App = {
   windowConfig: {
     maxWidth: 600,
     minWidth: 400,
-    minHeight: 350,
+    minHeight: 500,
   },
 };
 
