@@ -15,7 +15,7 @@ const SkillPage = () => {
             <p className="typo-callout mb-4 capitalize">{key}</p>
             <div className="flex flex-wrap gap-2">
               {items.map((item, j) => (
-                <Item key={j} className="w-fit" variant={'glass'}>
+                <Item key={j} className="w-fit" variant={'outline'}>
                   <ItemMedia>
                     <div className="size-4">
                       <img

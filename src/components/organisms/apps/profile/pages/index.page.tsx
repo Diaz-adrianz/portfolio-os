@@ -46,7 +46,7 @@ const IndexPage = () => {
       </div>
 
       <div className="mb-2 grid grid-cols-2 gap-2">
-        <Item variant={'glass'}>
+        <Item variant={'outline'}>
           <ItemMedia>
             <TimerIcon />
           </ItemMedia>
@@ -55,7 +55,7 @@ const IndexPage = () => {
             <ItemDescription>{dict('timezone')}</ItemDescription>
           </ItemContent>
         </Item>
-        <Item variant={'glass'}>
+        <Item variant={'outline'}>
           <ItemMedia>
             <MapPinIcon />
           </ItemMedia>
@@ -64,7 +64,7 @@ const IndexPage = () => {
             <ItemDescription>{dict('location')}</ItemDescription>
           </ItemContent>
         </Item>
-        <Item variant={'glass'}>
+        <Item variant={'outline'}>
           <ItemMedia>
             <HourglassIcon />
           </ItemMedia>
@@ -75,7 +75,7 @@ const IndexPage = () => {
             <ItemDescription>{dict('age')}</ItemDescription>
           </ItemContent>
         </Item>
-        <Item variant={'glass'}>
+        <Item variant={'outline'}>
           <ItemMedia>
             <MarsIcon />
           </ItemMedia>
@@ -85,7 +85,7 @@ const IndexPage = () => {
           </ItemContent>
         </Item>
       </div>
-      <Item variant={'glass'}>
+      <Item variant={'outline'}>
         <ItemContent className="text-muted-foreground">
           <Markdown>{tr(Biodata.bio)}</Markdown>
         </ItemContent>

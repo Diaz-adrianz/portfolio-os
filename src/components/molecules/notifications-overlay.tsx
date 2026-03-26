@@ -61,7 +61,7 @@ const NotificationItem = ({
   }, []);
 
   return (
-    <Item className="style-glass w-screen max-w-72">
+    <Item variant={'glass'} className="w-screen max-w-72 shadow-lg">
       <ItemMedia>
         {data.type == 'loading' && (
           <LoaderIcon className="text-primary animate-spin" />

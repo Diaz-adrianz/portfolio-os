@@ -84,7 +84,7 @@ const DetailPage = ({ id }: { id: string }) => {
               {work.notes?.map((item, i) => (
                 <Item
                   key={i}
-                  variant={'glass'}
+                  variant={'outline'}
                   className="min-w-60 flex-1"
                   asChild
                 >

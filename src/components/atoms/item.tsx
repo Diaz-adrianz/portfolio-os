@@ -39,7 +39,8 @@ const itemVariants = cva(
     variants: {
       variant: {
         default: 'border-transparent [a]:hover:bg-background',
-        outline: 'border-border bg-background/50',
+        outline:
+          'border-border/60 bg-background [a]:hover:bg-input/50 dark:border-input/40 dark:bg-input/30',
         muted: 'border-transparent bg-muted/50',
         glass: 'style-glass [a]:hover:bg-background',
       },
@@ -126,7 +127,7 @@ function ItemTitle({ className, ...props }: React.ComponentProps<'div'>) {
     <div
       data-slot="item-title"
       className={cn(
-        'line-clamp-1 w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4',
+        'line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4',
         className
       )}
       {...props}

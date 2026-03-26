@@ -29,7 +29,7 @@ const ExperiencePage = () => {
           >
             <div className="flex flex-wrap gap-2">
               {data.company.link && (
-                <Item variant={'glass'} asChild>
+                <Item variant={'outline'} asChild>
                   <a href={data.company.link} target="_blank">
                     <ItemMedia>
                       <LinkIcon size={16} />
@@ -41,7 +41,7 @@ const ExperiencePage = () => {
                 </Item>
               )}
               {data.note && (
-                <Item key={i} variant={'glass'} className="w-full" asChild>
+                <Item key={i} variant={'outline'} className="w-full" asChild>
                   <a
                     href="#"
                     onClick={() => open('NOTES', `detail/${data.note?.id}`)}

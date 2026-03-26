@@ -22,7 +22,7 @@ const EducationPage = () => {
             subtitle={`${tr(edu.degree)} - ${tr(edu.major)}`}
             image={edu.logo}
           >
-            <Item variant={'glass'}>
+            <Item variant={'outline'}>
               <ItemContent>
                 <ItemTitle>
                   {edu.gpa?.value} / {edu.gpa?.max}
