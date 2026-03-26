@@ -233,6 +233,8 @@ const CustomPage = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
 
+              <Separator className="my-2" />
+
               <Button
                 variant={withMessy ? 'outline' : 'ghost'}
                 onClick={() => setWithMessy((s) => !s)}

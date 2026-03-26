@@ -24,10 +24,12 @@ import {
   SquareCenterlineDashedHorizontalIcon,
   WandSparklesIcon,
 } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 import { PHOTO_RATIO, PHOTOS_COUNT, usePhotoboothContext } from '../view';
 import { AspectRatio } from '@/components/atoms/aspect-ratio';
+import { Alert, AlertDescription, AlertTitle } from '@/components/atoms/alert';
+import useCamera from '@/hooks/use-camera';
 
 const timerOptions: Option[] = [
   {
@@ -48,13 +50,10 @@ const IndexPage = () => {
   const { push } = usePageRouter();
   const { tr } = useSettings();
   const { photos, setPhotos } = usePhotoboothContext();
+  const { cameraAllowed, deviceId, devices, setDeviceId } = useCamera();
 
   const webcamRef = useRef<Webcam>(null);
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
-
-  // data
-  const [devices, setDevices] = useState<MediaDeviceInfo[]>([]),
-    [deviceId, setDeviceId] = useState<string>('');
 
   // settings
   const [mirrored, setMirrored] = useState(false),
@@ -62,17 +61,6 @@ const IndexPage = () => {
 
   const [isTaking, setIsTaking] = useState(false),
     [countdown, setCountdown] = useState<number | null>(null);
-
-  useEffect(() => {
-    navigator.mediaDevices.enumerateDevices().then((list) => {
-      const videoDevices = list.filter((d) => d.kind === 'videoinput');
-      setDevices(videoDevices);
-
-      if (videoDevices.length > 0) {
-        setDeviceId(videoDevices[0].deviceId);
-      }
-    });
-  }, []);
 
   const _clearPhotos = () => {
     setPhotos([]);
@@ -117,6 +105,15 @@ const IndexPage = () => {
 
   return (
     <div className="p-4">
+      {!cameraAllowed && (
+        <Alert variant={'destructive'} className="mb-4">
+          <AlertTitle>Camera Access Denied</AlertTitle>
+          <AlertDescription>
+            Please enable camera access in your browser settings to continue.
+          </AlertDescription>
+        </Alert>
+      )}
+
       <div className="mb-4 flex flex-wrap gap-2">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -162,7 +159,7 @@ const IndexPage = () => {
 
         <div className="grow"></div>
 
-        {!isTaking && photos.length == 0 && (
+        {!isTaking && photos.length == 0 && cameraAllowed && (
           <Button onClick={_takePhotos}>
             <CameraIcon /> Start
           </Button>
@@ -207,7 +204,7 @@ const IndexPage = () => {
                 </div>
               </CarouselItem>
             ))}
-            {photos.length < PHOTOS_COUNT && (
+            {photos.length < PHOTOS_COUNT && cameraAllowed && (
               <CarouselItem>
                 <div className="mx-auto w-full max-w-3xl px-4">
                   <AspectRatio ratio={PHOTO_RATIO}>
