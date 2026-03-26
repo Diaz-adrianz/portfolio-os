@@ -6,7 +6,7 @@ const photoboohtApp: App = {
   title: { en: 'Photo booth', id: 'Stan foto' },
   launcherId: 'launch-photobooht',
   windowConfig: {
-    maxWidth: 900,
+    maxWidth: 600,
     minWidth: 400,
     minHeight: 350,
   },
