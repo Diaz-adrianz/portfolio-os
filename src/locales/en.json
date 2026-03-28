@@ -5,6 +5,7 @@
   "get": "Get",
   "all": "All",
   "or": "Or",
+  "play": "Play",
 
   "welcomeTo": "Welcome to {{name}}",
   "searchHere": "Search here",
