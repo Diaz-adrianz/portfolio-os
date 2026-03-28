@@ -16,6 +16,7 @@ import {
   resolveSourceAnime,
 } from '@/lib/actions/tontonanime/actions';
 import { useEffect, useState } from 'react';
+import ReactPlayer from 'react-player';
 
 const StreamPage = ({ id }: { id: string }) => {
   const { notify } = useNotification(),
@@ -29,7 +30,7 @@ const StreamPage = ({ id }: { id: string }) => {
   const [sources, setSources] = useState<EpisodeSourceItem[]>([]),
     [source, setSource] = useState('');
 
-  const [link, setLink] = useState('');
+  const [url, setUrl] = useState('');
 
   const _getAnime = async (id: string) => {
     setIsLoading(true);
@@ -66,7 +67,7 @@ const StreamPage = ({ id }: { id: string }) => {
     const res = await resolveSourceAnime(source);
 
     if (res.status && res.data) {
-      setLink(res.data ?? '');
+      setUrl(res.data ?? '');
     } else {
       notify({ type: 'error', title: dict(res.message) });
     }
@@ -132,7 +133,16 @@ const StreamPage = ({ id }: { id: string }) => {
             </Select>
           </div>
 
-          <p>{link}</p>
+          <div className="aspect-video w-full overflow-hidden rounded-xl">
+            {url && (
+              <ReactPlayer
+                src={'/api/tontonanime/proxy?url=' + url}
+                controls
+                width="100%"
+                height="100%"
+              />
+            )}
+          </div>
         </>
       )}
     </div>
