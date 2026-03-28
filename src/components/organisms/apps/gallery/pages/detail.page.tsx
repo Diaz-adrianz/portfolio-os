@@ -42,13 +42,28 @@ const DetailPage = ({ id }: { id: string }) => {
               </DropdownMenu>
             </ItemActions>
           </Item>
-          <div className="relative w-full">
+          <div className="relative mb-4 w-full">
             {media?.type == 'image' && (
               <img
                 src={media.src}
                 alt=""
                 className="size-full object-contain"
               />
+            )}
+          </div>
+
+          <div className="mb-8 flex flex-wrap gap-4 p-4">
+            {media.attribute && (
+              <div className="min-w-60 flex-1">
+                <small className="typo-small text-muted-foreground block">
+                  Attribution
+                </small>
+                <Button variant={'link'} asChild className="p-0">
+                  <a href={media.attribute.link} target="_blank">
+                    {media.attribute.label}
+                  </a>
+                </Button>
+              </div>
             )}
           </div>
         </>

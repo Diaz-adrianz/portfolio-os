@@ -1,3 +1,6 @@
+import { GlobeIcon } from 'lucide-react';
+import { Link } from './social.data';
+
 export interface Media {
   id: string;
   title: string;
@@ -5,6 +8,7 @@ export interface Media {
   type: 'image' | 'video' | 'pdf';
   tags?: string[];
   meta?: Record<string, string>;
+  attribute?: Link;
 }
 
 const MediaData: Media[] = [
@@ -261,6 +265,11 @@ const MediaData: Media[] = [
     src: 'https://res.cloudinary.com/dv6fgxnug/image/upload/v1774683145/Stickers/love-badge_h2fydt.png',
     type: 'image',
     tags: ['photobooth-sticker'],
+    attribute: {
+      icon: GlobeIcon,
+      label: 'Valentines day stickers created by Acellalelo - Flaticon',
+      link: 'https://www.flaticon.com/free-stickers/valentines-day',
+    },
   },
   {
     id: '41',
@@ -268,6 +277,11 @@ const MediaData: Media[] = [
     src: 'https://res.cloudinary.com/dv6fgxnug/image/upload/v1774683149/Stickers/xoxo_vcb6ji.png',
     type: 'image',
     tags: ['photobooth-sticker'],
+    attribute: {
+      icon: GlobeIcon,
+      label: 'Xoxo stickers created by DinosoftLabs - Flaticon',
+      link: 'https://www.flaticon.com/free-stickers/xoxo',
+    },
   },
   {
     id: '42',
@@ -275,6 +289,11 @@ const MediaData: Media[] = [
     src: 'https://res.cloudinary.com/dv6fgxnug/image/upload/v1774683144/Stickers/kissing_kedh16.png',
     type: 'image',
     tags: ['photobooth-sticker'],
+    attribute: {
+      icon: GlobeIcon,
+      label: 'Kiss stickers created by smashingstocks - Flaticon',
+      link: 'https://www.flaticon.com/free-stickers/kiss',
+    },
   },
   {
     id: '43',
@@ -282,6 +301,11 @@ const MediaData: Media[] = [
     src: 'https://res.cloudinary.com/dv6fgxnug/image/upload/v1774683147/Stickers/party_nbrbzk.png',
     type: 'image',
     tags: ['photobooth-sticker'],
+    attribute: {
+      icon: GlobeIcon,
+      label: 'Confetti stickers created by smashingstocks - Flaticon',
+      link: 'https://www.flaticon.com/free-stickers/confetti',
+    },
   },
   {
     id: '44',
@@ -289,6 +313,11 @@ const MediaData: Media[] = [
     src: 'https://res.cloudinary.com/dv6fgxnug/image/upload/v1774683142/Stickers/celebration_dq6taa.png',
     type: 'image',
     tags: ['photobooth-sticker'],
+    attribute: {
+      icon: GlobeIcon,
+      label: 'Confetti stickers created by DinosoftLabs - Flaticon',
+      link: 'https://www.flaticon.com/free-stickers/confetti',
+    },
   },
   {
     id: '45',
@@ -296,6 +325,11 @@ const MediaData: Media[] = [
     src: 'https://res.cloudinary.com/dv6fgxnug/image/upload/v1774683141/Stickers/bunting_opgluw.png',
     type: 'image',
     tags: ['photobooth-sticker'],
+    attribute: {
+      icon: GlobeIcon,
+      label: 'Decoration stickers created by vectorsmarket15 - Flaticon',
+      link: 'https://www.flaticon.com/free-stickers/decoration',
+    },
   },
   {
     id: '46',
@@ -303,6 +337,11 @@ const MediaData: Media[] = [
     src: 'https://res.cloudinary.com/dv6fgxnug/image/upload/v1774690369/Stickers/hard-rock_x9p8o8.png',
     type: 'image',
     tags: ['photobooth-sticker'],
+    attribute: {
+      icon: GlobeIcon,
+      label: 'Punk stickers created by Paulinet - Flaticon',
+      link: 'https://www.flaticon.com/free-stickers/punk',
+    },
   },
   {
     id: '47',
@@ -310,6 +349,11 @@ const MediaData: Media[] = [
     src: 'https://res.cloudinary.com/dv6fgxnug/image/upload/v1774690371/Stickers/rock-and-roll_hqmitm.png',
     type: 'image',
     tags: ['photobooth-sticker'],
+    attribute: {
+      icon: GlobeIcon,
+      label: 'Electric guitar stickers created by Stickers - Flaticon',
+      link: 'https://www.flaticon.com/free-stickers/electric-guitar',
+    },
   },
 ];
 
