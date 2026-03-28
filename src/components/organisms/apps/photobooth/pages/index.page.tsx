@@ -66,20 +66,6 @@ const IndexPage = () => {
   const [isTaking, setIsTaking] = useState(false),
     [countdown, setCountdown] = useState<number | null>(null);
 
-  const _setCameraPermission = async () => {
-    let p;
-    try {
-      await navigator.mediaDevices.getUserMedia({ video: true });
-      p = 'granted';
-    } catch (err: any) {
-      if (err.name === 'NotAllowedError') p = 'denied';
-      else if (err.name === 'NotFoundError') p = 'no-device';
-      else p = 'error';
-    }
-
-    setCameraAllowed(p == 'granted');
-  };
-
   useEffect(() => {
     navigator.mediaDevices.enumerateDevices().then((list) => {
       const videoDevices = list.filter((d) => d.kind === 'videoinput');
@@ -88,8 +74,6 @@ const IndexPage = () => {
       if (videoDevices.length > 0) {
         setDeviceId(videoDevices[0].deviceId);
       }
-
-      _setCameraPermission();
     });
   }, []);
 
@@ -248,6 +232,9 @@ const IndexPage = () => {
                       }}
                       mirrored={mirrored}
                       className="size-full object-cover"
+                      onUserMediaError={() => {
+                        setCameraAllowed(false);
+                      }}
                     />
                   </AspectRatio>
                 </div>
