@@ -17,7 +17,11 @@ import {
   CalendarIcon,
   ClockIcon,
   DownloadIcon,
+  HeartIcon,
+  LucideIcon,
   PaletteIcon,
+  PartyPopperIcon,
+  Settings2Icon,
   ShuffleIcon,
   SmilePlusIcon,
   Trash2Icon,
@@ -33,6 +37,11 @@ import { ButtonGroup } from '@/components/atoms/button-group';
 import MediaData from '@/data/media.data';
 import { Option } from '@/data/options/option';
 import { motion } from 'motion/react';
+
+type Sticker = {
+  src: string;
+  init?: { x?: number; y?: number; rotate?: number };
+};
 
 const colors = [
   '#ff9999',
@@ -50,6 +59,19 @@ const colors = [
   '#ffc6ff',
   '#fffffc',
   '#d0b8ac',
+];
+
+const presets: Option<string, { icon: LucideIcon }>[] = [
+  {
+    value: 'love',
+    label: { en: 'Love', id: 'Cinta' },
+    meta: { icon: HeartIcon },
+  },
+  {
+    value: 'Party',
+    label: { en: 'Party', id: 'Pesta' },
+    meta: { icon: PartyPopperIcon },
+  },
 ];
 
 const CustomPage = () => {
@@ -112,7 +134,7 @@ const CustomPage = () => {
     [shape, setShape] = useState<Shape>(
       Shapes.at(getRandomInt(0, Shapes.length - 1))?.value ?? 'square'
     ),
-    [stickers, setStickers] = useState<string[]>([]),
+    [stickers, setStickers] = useState<Sticker[]>([]),
     [withMessy, setWithMessy] = useState(false),
     [withDate, setWithDate] = useState(false),
     [withTime, setWithTime] = useState(false);
@@ -157,7 +179,7 @@ const CustomPage = () => {
     }
   };
 
-  const _deleteSticker = (sticker: string, info: any) => {
+  const _deleteSticker = (src: string, info: any) => {
     const trash = trashRef.current?.getBoundingClientRect();
     const point = info.point;
 
@@ -170,8 +192,70 @@ const CustomPage = () => {
       point.y < trash.bottom;
 
     if (isInsideTrash) {
-      setStickers((prev) => prev.filter((s) => s !== sticker));
+      setStickers((prev) => prev.filter((s) => s.src !== src));
     }
+  };
+
+  const _filterStickers = (titles: string[]) => {
+    return _stickers
+      .filter((s) => titles.includes(s.label.en))
+      .reduce<Record<string, (typeof _stickers)[0]>>((a, c) => {
+        a[c.label.en] = c;
+        return a;
+      }, {});
+  };
+
+  const _setPreset = (key: string) => {
+    const stickers: Sticker[] = [];
+
+    if (key == 'love') {
+      setBackground(_backgrounds.find((b) => b.label.en == 'Red')?.value);
+      setShape('heart');
+
+      const stickersMap = _filterStickers(['XOXO', 'Love You', 'Kiss']);
+
+      if (stickersMap['Love You'])
+        stickers.push({
+          src: stickersMap['Love You'].value,
+          init: { x: 7, y: 60, rotate: 15 },
+        });
+      if (stickersMap['XOXO'])
+        stickers.push({
+          src: stickersMap['XOXO'].value,
+          init: { x: 95, y: 155, rotate: -20 },
+        });
+      if (stickersMap['Kiss'])
+        stickers.push({
+          src: stickersMap['Kiss'].value,
+          init: { x: 25, y: 345, rotate: 10 },
+        });
+    } else if (key == 'Party') {
+      setBackground(_backgrounds.find((b) => b.label.en == 'Rainbow')?.value);
+      setShape('squircle');
+
+      const stickersMap = _filterStickers([
+        'Lets Party',
+        'Bunting',
+        'Confetti',
+      ]);
+
+      if (stickersMap['Lets Party'])
+        stickers.push({
+          src: stickersMap['Lets Party'].value,
+          init: { x: 95, y: 350, rotate: -30 },
+        });
+      if (stickersMap['Confetti'])
+        stickers.push({
+          src: stickersMap['Confetti'].value,
+          init: { x: 5, y: 165, rotate: 0 },
+        });
+      if (stickersMap['Bunting'])
+        stickers.push({
+          src: stickersMap['Bunting'].value,
+          init: { x: 100, y: -15, rotate: 40 },
+        });
+    }
+    setStickers(stickers);
   };
 
   return (
@@ -196,14 +280,20 @@ const CustomPage = () => {
                   }}
                 >
                   {/* Stickers overlay decoration */}
-                  {stickers.map((item) => (
+                  {stickers.map((item, i) => (
                     <motion.img
-                      key={item}
-                      src={item}
+                      key={item.src + i}
+                      src={item.src}
+                      animate={{
+                        top: item.init?.y,
+                        left: item.init?.x,
+                        rotate: item.init?.rotate,
+                      }}
+                      transition={{ duration: 0 }}
                       drag
                       dragConstraints={containerRef}
                       dragElastic={0.2}
-                      onDragEnd={(e, info) => _deleteSticker(item, info)}
+                      onDragEnd={(e, info) => _deleteSticker(item.src, info)}
                       className="absolute z-10 h-16 w-16 cursor-grab active:cursor-grabbing"
                     />
                   ))}
@@ -269,6 +359,27 @@ const CustomPage = () => {
             </div>
 
             <div className="flex max-w-36 grow flex-col gap-2 overflow-hidden">
+              {/* Preset  */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant={'outline'}>
+                    <Settings2Icon /> Preset
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  {presets.map((item, i) => (
+                    <DropdownMenuItem
+                      key={i}
+                      onClick={() => _setPreset(item.value)}
+                    >
+                      {item.meta?.icon && <item.meta.icon />} {tr(item.label)}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <Separator className="my-2" />
+
               {/* Background color */}
               <ButtonGroup className="relative w-full">
                 <DropdownMenu>
@@ -387,7 +498,7 @@ const CustomPage = () => {
                     <DropdownMenuItem
                       key={i}
                       onClick={() =>
-                        setStickers((prev) => [...prev, item.value])
+                        setStickers((prev) => [...prev, { src: item.value }])
                       }
                     >
                       {tr(item.label)}
