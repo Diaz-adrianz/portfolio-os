@@ -6,6 +6,7 @@ import { Button } from '@/components/atoms/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
@@ -18,6 +19,8 @@ import {
   DownloadIcon,
   PaletteIcon,
   ShuffleIcon,
+  SmilePlusIcon,
+  Trash2Icon,
   XIcon,
 } from 'lucide-react';
 import { formatTime } from '@/utils/date';
@@ -29,6 +32,7 @@ import { Separator } from '@/components/atoms/separator';
 import { ButtonGroup } from '@/components/atoms/button-group';
 import MediaData from '@/data/media.data';
 import { Option } from '@/data/options/option';
+import { motion } from 'motion/react';
 
 const colors = [
   '#ff9999',
@@ -55,19 +59,35 @@ const CustomPage = () => {
 
   const date = new Date();
 
-  const stripRef = useRef<HTMLDivElement>(null),
+  const containerRef = useRef<HTMLDivElement>(null),
+    stripRef = useRef<HTMLDivElement>(null),
+    trashRef = useRef<HTMLDivElement>(null),
     colorInputRef = useRef<HTMLInputElement>(null);
 
   const [loading, setLoading] = useState(false);
 
-  const _backgrounds: Option<string, { foreground?: string }>[] = useMemo(
+  const _backgrounds: Option<
+    string,
+    { foreground?: string; background?: string }
+  >[] = useMemo(
     () =>
       MediaData.filter((m) => m.tags?.includes('photobooth-background')).map(
         (m) => ({
           value: m.src,
           label: { en: m.title, id: m.title },
-          meta: { foreground: m.meta?.foreground },
+          meta: {
+            foreground: m.meta?.foreground,
+            background: m.meta?.background,
+          },
         })
+      ),
+    []
+  );
+
+  const _stickers: Option[] = useMemo(
+    () =>
+      MediaData.filter((m) => m.tags?.includes('photobooth-sticker')).map(
+        (m) => ({ value: m.src, label: { en: m.title, id: m.title } })
       ),
     []
   );
@@ -92,6 +112,7 @@ const CustomPage = () => {
     [shape, setShape] = useState<Shape>(
       Shapes.at(getRandomInt(0, Shapes.length - 1))?.value ?? 'square'
     ),
+    [stickers, setStickers] = useState<string[]>([]),
     [withMessy, setWithMessy] = useState(false),
     [withDate, setWithDate] = useState(false),
     [withTime, setWithTime] = useState(false);
@@ -136,24 +157,58 @@ const CustomPage = () => {
     }
   };
 
+  const _deleteSticker = (sticker: string, info: any) => {
+    const trash = trashRef.current?.getBoundingClientRect();
+    const point = info.point;
+
+    if (!trash) return;
+
+    const isInsideTrash =
+      point.x > trash.left &&
+      point.x < trash.right &&
+      point.y > trash.top &&
+      point.y < trash.bottom;
+
+    if (isInsideTrash) {
+      setStickers((prev) => prev.filter((s) => s !== sticker));
+    }
+  };
+
   return (
     <div className="p-4">
       {photos.length == PHOTOS_COUNT && (
         <>
           <div className="flex gap-4">
-            <div className="bg-background dark:bg-background/40 relative grow overflow-x-auto rounded-xl p-4">
+            <div
+              ref={containerRef}
+              className="bg-background dark:bg-background/40 relative grow overflow-x-auto rounded-xl p-4"
+            >
               {loading && <LoadingOverlay />}
 
-              {/* photostrip */}
+              {/* Photostrip */}
               <div className="mx-auto w-full max-w-40 min-w-40">
                 <AspectRatio
                   ref={stripRef}
                   ratio={10.5 / 29.7}
-                  className="flex flex-col gap-2 p-5 pb-3"
+                  className="flex flex-col"
                   style={{
                     backgroundColor: color,
                   }}
                 >
+                  {/* Stickers overlay decoration */}
+                  {stickers.map((item) => (
+                    <motion.img
+                      key={item}
+                      src={item}
+                      drag
+                      dragConstraints={containerRef}
+                      dragElastic={0.2}
+                      onDragEnd={(e, info) => _deleteSticker(item, info)}
+                      className="absolute z-10 h-16 w-16 cursor-grab active:cursor-grabbing"
+                    />
+                  ))}
+
+                  {/* Background Image */}
                   {background && (
                     <div className="absolute top-0 left-0 size-full overflow-hidden">
                       <img
@@ -164,26 +219,35 @@ const CustomPage = () => {
                     </div>
                   )}
 
-                  {photos.map((item, i) => (
-                    <AspectRatio key={i} className="w-full" ratio={PHOTO_RATIO}>
-                      <img
-                        src={item}
-                        alt=""
-                        className="size-full object-cover"
-                        style={{
-                          ..._getShapeStyle(shape),
-                          ...(withMessy && _offsets.at(i)),
-                        }}
-                      />
-                    </AspectRatio>
-                  ))}
+                  {/* Photos */}
+                  <div className="flex w-full flex-col gap-2 px-5 pt-3 pb-2">
+                    {photos.map((item, i) => (
+                      <AspectRatio
+                        key={i}
+                        className="w-full"
+                        ratio={PHOTO_RATIO}
+                      >
+                        <img
+                          src={item}
+                          alt=""
+                          className="size-full object-cover"
+                          style={{
+                            ..._getShapeStyle(shape),
+                            ...(withMessy && _offsets.at(i)),
+                          }}
+                        />
+                      </AspectRatio>
+                    ))}
+                  </div>
 
+                  {/* Marker */}
                   <div
-                    className="relative mt-auto grid gap-px text-center"
+                    className="relative mt-auto grid gap-px px-3 py-2 text-center"
                     style={{
                       color:
                         _background?.meta?.foreground ??
                         getContrastColor(color),
+                      backgroundColor: _background?.meta?.background,
                     }}
                   >
                     <p className="typo-footnote-emphasized">Diaz photo</p>
@@ -194,9 +258,18 @@ const CustomPage = () => {
                   </div>
                 </AspectRatio>
               </div>
+
+              {/* Trash Area for Overlay Decoration  */}
+              <div
+                ref={trashRef}
+                className="bg-destructive/20 text-destructive absolute top-0 left-0 flex items-center justify-center rounded-br-full p-2 pr-4 pb-4"
+              >
+                <Trash2Icon size={14} />
+              </div>
             </div>
 
             <div className="flex max-w-36 grow flex-col gap-2 overflow-hidden">
+              {/* Background color */}
               <ButtonGroup className="relative w-full">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -245,6 +318,7 @@ const CustomPage = () => {
                 />
               </ButtonGroup>
 
+              {/* Background image */}
               <ButtonGroup className="relative w-full">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -279,6 +353,7 @@ const CustomPage = () => {
                 )}
               </ButtonGroup>
 
+              {/* Photo shape */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant={'outline'}>
@@ -300,8 +375,30 @@ const CustomPage = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
 
+              {/* Add Sticker */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant={'outline'}>
+                    <SmilePlusIcon /> Add sticker
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  {_stickers.map((item, i) => (
+                    <DropdownMenuItem
+                      key={i}
+                      onClick={() =>
+                        setStickers((prev) => [...prev, item.value])
+                      }
+                    >
+                      {tr(item.label)}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+
               <Separator className="my-2" />
 
+              {/* Messy Photos (rotate and translate a bit)*/}
               <Button
                 variant={withMessy ? 'outline' : 'ghost'}
                 onClick={() => setWithMessy((s) => !s)}
@@ -309,6 +406,7 @@ const CustomPage = () => {
                 <ShuffleIcon /> Messy
               </Button>
 
+              {/* Add date below marker */}
               <Button
                 variant={withDate ? 'outline' : 'ghost'}
                 onClick={() => setWithDate((s) => !s)}
@@ -316,6 +414,7 @@ const CustomPage = () => {
                 <CalendarIcon /> Add date
               </Button>
 
+              {/* Add time below marker */}
               <Button
                 variant={withTime ? 'outline' : 'ghost'}
                 onClick={() => setWithTime((s) => !s)}
@@ -325,6 +424,7 @@ const CustomPage = () => {
 
               <Separator className="my-2" />
 
+              {/* Download / Export */}
               <Button onClick={_download}>
                 <DownloadIcon /> Download
               </Button>

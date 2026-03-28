@@ -226,8 +226,8 @@ const MediaData: Media[] = [
   },
   {
     id: '37',
-    title: 'Red Background',
-    src: 'https://res.cloudinary.com/dv6fgxnug/image/upload/v1774683094/Backgrounds/cz2kqzv1ltrxbmgqvld1.jpg',
+    title: 'Red',
+    src: 'https://res.cloudinary.com/dv6fgxnug/image/upload/v1774683094/Backgrounds/red-watercolor.jpg',
     type: 'image',
     tags: ['photobooth-background'],
     meta: {
@@ -236,13 +236,38 @@ const MediaData: Media[] = [
   },
   {
     id: '38',
-    title: 'Rainbow Background',
-    src: 'https://res.cloudinary.com/dv6fgxnug/image/upload/v1774683095/Backgrounds/10_Rainbow_Watercolor_Wallpaper_Backgrounds_pudx1t.jpg',
+    title: 'Rainbow',
+    src: 'https://res.cloudinary.com/dv6fgxnug/image/upload/v1774683095/Backgrounds/rainbow-watercolor.jpg',
     type: 'image',
     tags: ['photobooth-background'],
     meta: {
       foreground: '#000000',
     },
+  },
+  {
+    id: '39',
+    title: 'Pop Punk',
+    src: 'https://res.cloudinary.com/dv6fgxnug/image/upload/v1774686222/Backgrounds/pop-punk.jpg',
+    type: 'image',
+    tags: ['photobooth-background'],
+    meta: {
+      foreground: '#ffffff',
+      background: '#000000',
+    },
+  },
+  {
+    id: '40',
+    title: 'Love You',
+    src: 'https://res.cloudinary.com/dv6fgxnug/image/upload/v1774683145/Stickers/love-badge_h2fydt.png',
+    type: 'image',
+    tags: ['photobooth-sticker'],
+  },
+  {
+    id: '41',
+    title: 'XOXO',
+    src: 'https://res.cloudinary.com/dv6fgxnug/image/upload/v1774683149/Stickers/xoxo_vcb6ji.png',
+    type: 'image',
+    tags: ['photobooth-sticker'],
   },
 ];
 
