@@ -8,6 +8,7 @@ import type { App, Launcher } from './types';
 import { appsApp, appsLauncher } from './apps/apps/app';
 import { ingfokanimeApp, ingfokanimeLauncher } from './apps/ingfokanime/app';
 import { photoboohtApp, photoboohtLauncher } from './apps/photobooth/app';
+import { tontonanimeApp, tontonanimeLauncher } from './apps/tontonanime/app';
 
 const Launchers: Record<App['id'], Launcher> = {
   [appsApp.id]: appsLauncher,
@@ -19,6 +20,7 @@ const Launchers: Record<App['id'], Launcher> = {
   [galleryApp.id]: galleryLauncher,
   [photoboohtApp.id]: photoboohtLauncher,
   [ingfokanimeApp.id]: ingfokanimeLauncher,
+  [tontonanimeApp.id]: tontonanimeLauncher,
 };
 
 const LauncherList: Launcher[] = Object.values(Launchers);

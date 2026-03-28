@@ -9,6 +9,7 @@ import IconApss from './icon-apps.png';
 import IconBooth from './icon-booth.png';
 
 import IconIngfokanime from './icon-ingfokanime.png';
+import IconTontonanime from './icon-tontonanime.png';
 
 import IlusNotes from './ilus-notes.svg';
 
@@ -24,6 +25,6 @@ export {
   IconBooth,
 };
 
-export { IconIngfokanime };
+export { IconIngfokanime, IconTontonanime };
 
 export { IlusNotes };

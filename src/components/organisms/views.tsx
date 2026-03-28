@@ -18,6 +18,8 @@ import { ingfokanimeApp } from './apps/ingfokanime/app';
 import IngfokanimeView from './apps/ingfokanime/view';
 import { photoboohtApp } from './apps/photobooth/app';
 import PhotoboothView from './apps/photobooth/view';
+import { tontonanimeApp } from './apps/tontonanime/app';
+import TontonanimeView from './apps/tontonanime/view';
 
 const Views: Record<App['id'], ReactNode> = {
   [appsApp.id]: <AppsView />,
@@ -29,6 +31,7 @@ const Views: Record<App['id'], ReactNode> = {
   [mailApp.id]: <MailView />,
   [photoboohtApp.id]: <PhotoboothView />,
   [ingfokanimeApp.id]: <IngfokanimeView />,
+  [tontonanimeApp.id]: <TontonanimeView />,
 };
 
 export default Views;
