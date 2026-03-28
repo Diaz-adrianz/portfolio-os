@@ -122,9 +122,14 @@ const IndexPage = () => {
     <div className="p-4">
       {!cameraAllowed && (
         <Alert variant={'destructive'} className="mb-4">
-          <AlertTitle>Camera Access Denied</AlertTitle>
+          <AlertTitle>
+            {tr({ en: 'Camera Access Denied', id: 'Akses Kamera Ditolak' })}
+          </AlertTitle>
           <AlertDescription>
-            Please enable camera access in your browser settings to continue.
+            {tr({
+              en: 'Please enable camera access in your browser settings to continue.',
+              id: 'Mohon aktifkan izin kamera pada pengaturan peramban untuk melanjutkan.',
+            })}
           </AlertDescription>
         </Alert>
       )}
@@ -176,7 +181,7 @@ const IndexPage = () => {
 
         {!isTaking && photos.length == 0 && cameraAllowed && (
           <Button onClick={_takePhotos}>
-            <CameraIcon /> Start
+            <CameraIcon /> {tr({ en: 'Start', id: 'Mulai' })}
           </Button>
         )}
 
@@ -184,7 +189,7 @@ const IndexPage = () => {
           <>
             <Button asChild>
               <a href="#" onClick={() => push('custom')}>
-                <WandSparklesIcon /> Customize
+                <WandSparklesIcon /> Edit
               </a>
             </Button>
             <Button

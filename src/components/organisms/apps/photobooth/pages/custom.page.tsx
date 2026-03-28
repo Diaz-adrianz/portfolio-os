@@ -169,7 +169,7 @@ const CustomPage = () => {
         pixelRatio: 3,
       });
       const link = document.createElement('a');
-      link.download = 'card.png';
+      link.download = 'photostrip.png';
       link.href = dataUrl;
       link.click();
     } catch {
@@ -393,7 +393,7 @@ const CustomPage = () => {
                       }}
                       disabled={!!background}
                     >
-                      Color
+                      {tr({ en: 'Color', id: 'Warna' })}
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-52">
@@ -437,7 +437,8 @@ const CustomPage = () => {
                       className="line-clamp-1 flex-1 text-ellipsis"
                       variant={'outline'}
                     >
-                      {tr(_background?.label) || 'Background'}
+                      {tr(_background?.label) ||
+                        tr({ en: 'Background', id: 'Latar' })}
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-52">
@@ -490,7 +491,7 @@ const CustomPage = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant={'outline'}>
-                    <SmilePlusIcon /> Add sticker
+                    <SmilePlusIcon /> {tr({ en: 'Sticker', id: 'Stiker' })}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
@@ -514,7 +515,7 @@ const CustomPage = () => {
                 variant={withMessy ? 'outline' : 'ghost'}
                 onClick={() => setWithMessy((s) => !s)}
               >
-                <ShuffleIcon /> Messy
+                <ShuffleIcon /> {tr({ en: 'Messy', id: 'Acak' })}
               </Button>
 
               {/* Add date below marker */}
@@ -522,7 +523,7 @@ const CustomPage = () => {
                 variant={withDate ? 'outline' : 'ghost'}
                 onClick={() => setWithDate((s) => !s)}
               >
-                <CalendarIcon /> Add date
+                <CalendarIcon /> {tr({ en: 'Add date', id: 'Tambah tanggal' })}
               </Button>
 
               {/* Add time below marker */}
@@ -530,14 +531,14 @@ const CustomPage = () => {
                 variant={withTime ? 'outline' : 'ghost'}
                 onClick={() => setWithTime((s) => !s)}
               >
-                <ClockIcon /> Add time
+                <ClockIcon /> {tr({ en: 'Add time', id: 'Tambah jam' })}
               </Button>
 
               <Separator className="my-2" />
 
               {/* Download / Export */}
               <Button onClick={_download}>
-                <DownloadIcon /> Download
+                <DownloadIcon /> {tr({ en: 'Download', id: 'Unduh' })}
               </Button>
             </div>
           </div>
