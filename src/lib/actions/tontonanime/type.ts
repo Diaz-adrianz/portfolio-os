@@ -1,6 +1,7 @@
 export type Anime = {
   id: string;
   name: string;
-  episodes?: number;
   type?: string;
+  episodes?: string[];
+  episodesCount?: number;
 };

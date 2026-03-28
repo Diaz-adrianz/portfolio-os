@@ -68,20 +68,20 @@ const SearchPage = () => {
                 <ItemContent>
                   <ItemTitle>{item.name ?? '-'}</ItemTitle>
                   <ItemDescription>
-                    {item.episodes ?? 0} episodes
+                    {item.episodesCount ?? 0} episodes
                   </ItemDescription>
                 </ItemContent>
                 <ItemActions>
                   <ButtonGroup>
                     <Button
                       variant={'tinted'}
-                      onClick={() => push(`detail/${item.id}`)}
+                      onClick={() => push(`stream/${item.id}`)}
                     >
                       {dict('play')}
                     </Button>
                     <Button
                       variant={'tinted'}
-                      onClick={() => open('TONTONANIME', `detail/${item.id}`)}
+                      onClick={() => open('TONTONANIME', `stream/${item.id}`)}
                       size={'icon'}
                     >
                       <ArrowUpRightIcon />
