@@ -12,6 +12,7 @@ import IconIngfokanime from './icon-ingfokanime.png';
 import IconTontonanime from './icon-tontonanime.png';
 
 import IlusNotes from './ilus-notes.svg';
+import IlusVideos from './ilus-videos.svg';
 
 export {
   IconTasks,
@@ -27,4 +28,4 @@ export {
 
 export { IconIngfokanime, IconTontonanime };
 
-export { IlusNotes };
+export { IlusNotes, IlusVideos };
