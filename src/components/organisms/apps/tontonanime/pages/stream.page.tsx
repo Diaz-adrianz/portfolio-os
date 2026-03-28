@@ -32,7 +32,7 @@ const StreamPage = ({ id }: { id: string }) => {
 
   const [url, setUrl] = useState('');
 
-  const _getAnime = async (id: string) => {
+  const _getAnime = async () => {
     setIsLoading(true);
 
     const res = await detailAnime(id);
@@ -46,7 +46,11 @@ const StreamPage = ({ id }: { id: string }) => {
     setIsLoading(false);
   };
 
-  const _getSources = async (id: string, episode: string) => {
+  const _getSources = async () => {
+    setSources([]);
+    setUrl('');
+    if (!episode) return;
+
     setIsLoading(true);
 
     const res = await episodeSourcesAnime(id, episode);
@@ -61,7 +65,10 @@ const StreamPage = ({ id }: { id: string }) => {
     setIsLoading(false);
   };
 
-  const _getLink = async (source: string) => {
+  const _getUrl = async () => {
+    setUrl('');
+    if (!source) return;
+
     setIsLoading(true);
 
     const res = await resolveSourceAnime(source);
@@ -76,15 +83,15 @@ const StreamPage = ({ id }: { id: string }) => {
   };
 
   useEffect(() => {
-    _getAnime(id);
+    _getAnime();
   }, [id]);
 
   useEffect(() => {
-    if (episode) _getSources(id, episode);
+    _getSources();
   }, [id, episode]);
 
   useEffect(() => {
-    if (source) _getLink(source);
+    _getUrl();
   }, [source]);
 
   return (
