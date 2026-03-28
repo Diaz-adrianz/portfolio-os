@@ -219,7 +219,7 @@ const IndexPage = () => {
           <div className="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 text-center">
             <h3 className="typo-display">{countdown}</h3>
             <p className="typo-body">
-              {photos.length}/{PHOTOS_COUNT}
+              {photos.length + 1}/{PHOTOS_COUNT}
             </p>
           </div>
         )}

@@ -18,6 +18,7 @@ import {
   DownloadIcon,
   PaletteIcon,
   ShuffleIcon,
+  XIcon,
 } from 'lucide-react';
 import { formatTime } from '@/utils/date';
 import { getContrastColor } from '@/utils/string';
@@ -26,6 +27,8 @@ import { toPng } from 'html-to-image';
 import useNotification from '@/hooks/use-notiification';
 import { Separator } from '@/components/atoms/separator';
 import { ButtonGroup } from '@/components/atoms/button-group';
+import MediaData from '@/data/media.data';
+import { Option } from '@/data/options/option';
 
 const colors = [
   '#ff9999',
@@ -57,9 +60,35 @@ const CustomPage = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const _backgrounds: Option<string, { foreground?: string }>[] = useMemo(
+    () =>
+      MediaData.filter((m) => m.tags?.includes('photobooth-background')).map(
+        (m) => ({
+          value: m.src,
+          label: { en: m.title, id: m.title },
+          meta: { foreground: m.meta?.foreground },
+        })
+      ),
+    []
+  );
+
+  const _offsets = useMemo(
+    () =>
+      photos.map((_, i) => {
+        const isOdd = i % 2 !== 0;
+        const translate = Math.random() * 4 + 3;
+        const rotate = Math.random() * 4 + 1;
+        return {
+          transform: `translateX(${isOdd ? -translate : translate}px) rotate(${isOdd ? rotate : -rotate}deg)`,
+        };
+      }),
+    [photos]
+  );
+
   const [color, setColor] = useState(
       colors.at(getRandomInt(0, colors.length - 1)) ?? ''
     ),
+    [background, setBackground] = useState<string>(),
     [shape, setShape] = useState<Shape>(
       Shapes.at(getRandomInt(0, Shapes.length - 1))?.value ?? 'square'
     ),
@@ -67,7 +96,8 @@ const CustomPage = () => {
     [withDate, setWithDate] = useState(false),
     [withTime, setWithTime] = useState(false);
 
-  const _shape = Shape[shape];
+  const _shape = Shape[shape],
+    _background = _backgrounds.find((b) => b.value == background);
 
   const _getShapeStyle = (shape: Shape): CSSProperties => {
     if (shape == 'square') return { borderRadius: 0 };
@@ -86,19 +116,6 @@ const CustomPage = () => {
 
     return {};
   };
-
-  const _offsets = useMemo(
-    () =>
-      photos.map((_, i) => {
-        const isOdd = i % 2 !== 0;
-        const translate = Math.random() * 4 + 3;
-        const rotate = Math.random() * 4 + 1;
-        return {
-          transform: `translateX(${isOdd ? -translate : translate}px) rotate(${isOdd ? rotate : -rotate}deg)`,
-        };
-      }),
-    [photos]
-  );
 
   const _download = async () => {
     if (!stripRef.current) return;
@@ -132,11 +149,21 @@ const CustomPage = () => {
                 <AspectRatio
                   ref={stripRef}
                   ratio={10.5 / 29.7}
-                  className="flex flex-col gap-2 px-5 py-3"
+                  className="flex flex-col gap-2 p-5 pb-3"
                   style={{
                     backgroundColor: color,
                   }}
                 >
+                  {background && (
+                    <div className="absolute top-0 left-0 size-full overflow-hidden">
+                      <img
+                        src={background}
+                        alt=""
+                        className="size-full object-cover"
+                      />
+                    </div>
+                  )}
+
                   {photos.map((item, i) => (
                     <AspectRatio key={i} className="w-full" ratio={PHOTO_RATIO}>
                       <img
@@ -152,8 +179,12 @@ const CustomPage = () => {
                   ))}
 
                   <div
-                    className="mt-auto grid gap-px text-center"
-                    style={{ color: getContrastColor(color) }}
+                    className="relative mt-auto grid gap-px text-center"
+                    style={{
+                      color:
+                        _background?.meta?.foreground ??
+                        getContrastColor(color),
+                    }}
                   >
                     <p className="typo-footnote-emphasized">Diaz photo</p>
                     <small className="typo-caption-2 opacity-60">
@@ -165,7 +196,7 @@ const CustomPage = () => {
               </div>
             </div>
 
-            <div className="flex max-w-32 grow flex-col gap-2">
+            <div className="flex max-w-36 grow flex-col gap-2 overflow-hidden">
               <ButtonGroup className="relative w-full">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -176,6 +207,7 @@ const CustomPage = () => {
                         backgroundColor: color,
                         color: getContrastColor(color),
                       }}
+                      disabled={!!background}
                     >
                       Color
                     </Button>
@@ -200,6 +232,7 @@ const CustomPage = () => {
                   size={'icon'}
                   variant={'outline'}
                   onClick={() => colorInputRef.current?.click()}
+                  disabled={!!background}
                 >
                   <PaletteIcon />
                 </Button>
@@ -210,6 +243,40 @@ const CustomPage = () => {
                   value={color}
                   onChange={(e) => setColor(e.target.value)}
                 />
+              </ButtonGroup>
+
+              <ButtonGroup className="relative w-full">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      className="line-clamp-1 flex-1 text-ellipsis"
+                      variant={'outline'}
+                    >
+                      {tr(_background?.label) || 'Background'}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-52">
+                    <DropdownMenuRadioGroup
+                      value={background}
+                      onValueChange={setBackground}
+                    >
+                      {_backgrounds.map((item, i) => (
+                        <DropdownMenuRadioItem key={i} value={item.value}>
+                          {tr(item.label)}
+                        </DropdownMenuRadioItem>
+                      ))}
+                    </DropdownMenuRadioGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                {background && (
+                  <Button
+                    size={'icon'}
+                    variant={'outline'}
+                    onClick={() => setBackground(undefined)}
+                  >
+                    <XIcon />
+                  </Button>
+                )}
               </ButtonGroup>
 
               <DropdownMenu>

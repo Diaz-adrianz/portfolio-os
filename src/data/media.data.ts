@@ -3,6 +3,8 @@ export interface Media {
   title: string;
   src: string;
   type: 'image' | 'video' | 'pdf';
+  tags?: string[];
+  meta?: Record<string, string>;
 }
 
 const MediaData: Media[] = [
@@ -221,6 +223,26 @@ const MediaData: Media[] = [
     title: 'Home Credit Decision Web',
     src: 'https://res.cloudinary.com/dv6fgxnug/image/upload/v1774359389/project%20shots/Xnapper-2026-03-24-8.19.55_PM_Large_uprwg5.jpg',
     type: 'image',
+  },
+  {
+    id: '37',
+    title: 'Red Background',
+    src: 'https://res.cloudinary.com/dv6fgxnug/image/upload/v1774683094/Backgrounds/cz2kqzv1ltrxbmgqvld1.jpg',
+    type: 'image',
+    tags: ['photobooth-background'],
+    meta: {
+      foreground: '#ffffff',
+    },
+  },
+  {
+    id: '38',
+    title: 'Rainbow Background',
+    src: 'https://res.cloudinary.com/dv6fgxnug/image/upload/v1774683095/Backgrounds/10_Rainbow_Watercolor_Wallpaper_Backgrounds_pudx1t.jpg',
+    type: 'image',
+    tags: ['photobooth-background'],
+    meta: {
+      foreground: '#000000',
+    },
   },
 ];
 
