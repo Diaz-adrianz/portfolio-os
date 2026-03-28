@@ -140,15 +140,17 @@ const StreamPage = ({ id }: { id: string }) => {
             </Select>
           </div>
 
-          <div className="aspect-video w-full overflow-hidden rounded-xl">
-            {url && (
-              <ReactPlayer
-                src={'/api/tontonanime/proxy?url=' + url}
-                controls
-                width="100%"
-                height="100%"
-              />
-            )}
+          <div className="bg-background/40 w-full">
+            <div className="mx-auto aspect-video w-full max-w-6xl overflow-hidden">
+              {url && (
+                <ReactPlayer
+                  src={'/api/tontonanime/proxy?url=' + url}
+                  controls
+                  width="100%"
+                  height="100%"
+                />
+              )}
+            </div>
           </div>
         </>
       )}
