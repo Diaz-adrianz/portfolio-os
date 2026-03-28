@@ -84,3 +84,12 @@ export const getContrastColor = (hex: string): '#000000' | '#ffffff' => {
 
   return luminance > 186 ? '#000000' : '#ffffff';
 };
+
+export const isUrl = (str: string): boolean => {
+  try {
+    new URL(str);
+    return true;
+  } catch {
+    return false;
+  }
+};

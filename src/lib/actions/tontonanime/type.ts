@@ -5,3 +5,8 @@ export type Anime = {
   episodes?: string[];
   episodesCount?: number;
 };
+
+export type EpisodeSource = {
+  provider: string;
+  source: string;
+};
