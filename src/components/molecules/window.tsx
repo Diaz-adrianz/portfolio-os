@@ -40,6 +40,7 @@ type Position = Pick<
 
 type ContextState = {
   id: string;
+  appId: string;
   initialRoute?: Route;
   close: () => void;
   minimize: () => void;
@@ -385,6 +386,7 @@ const Window = ({
       <Context.Provider
         value={{
           id: state.id,
+          appId: state.appId,
           initialRoute: state.route,
           close: _close,
           minimize: _minimize,

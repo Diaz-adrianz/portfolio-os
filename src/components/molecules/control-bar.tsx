@@ -65,6 +65,7 @@ const ControlBar = () => {
   };
 
   const _shutdown = () => {
+    windows.clear();
     setShutdown(true);
   };
 

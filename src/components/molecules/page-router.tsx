@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  ComponentProps,
   createContext,
   useContext,
   useEffect,
@@ -10,6 +11,14 @@ import {
 } from 'react';
 import { motion } from 'motion/react';
 import { ScrollArea } from '../atoms/scroll-area';
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from '../atoms/context-menu';
+import useSettings from '@/hooks/use-settings';
+import { useWindow } from './window';
 
 export type Route = string;
 export type Routes = Record<
@@ -133,4 +142,39 @@ const PageRouterView = ({ routes }: { routes: Routes }) => {
   );
 };
 
-export { PageRouterProvider, matchRoute, PageRouterView, usePageRouter };
+const PageRouterMenu = ({
+  ...props
+}: ComponentProps<typeof ContextMenuTrigger>) => {
+  const { dict } = useSettings(),
+    { appId } = useWindow(),
+    { route } = usePageRouter();
+
+  const _share = async () => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('app', appId);
+    url.searchParams.set('route', route);
+
+    await navigator.share({ url: url.toString() }).catch(() => {
+      // silent
+    });
+  };
+
+  return (
+    <ContextMenu>
+      <ContextMenuTrigger {...props} />
+      <ContextMenuContent>
+        <ContextMenuItem onClick={_share} disabled={!navigator.canShare}>
+          {dict('share')}...
+        </ContextMenuItem>
+      </ContextMenuContent>
+    </ContextMenu>
+  );
+};
+
+export {
+  PageRouterProvider,
+  matchRoute,
+  PageRouterView,
+  PageRouterMenu,
+  usePageRouter,
+};

@@ -9,7 +9,7 @@ import {
 import { WindowBar } from '../window';
 import type { ReactNode } from 'react';
 import { cn } from '@/utils/misc';
-import { usePageRouter } from '../page-router';
+import { PageRouterMenu, usePageRouter } from '../page-router';
 import { Button } from '@/components/atoms/button';
 import useSettings from '@/hooks/use-settings';
 import { ChevronLeftIcon } from 'lucide-react';
@@ -35,6 +35,7 @@ const View = ({ barSlot, contentSlot, children }: ViewProps) => {
             {dict('back')}
           </Button>
         )}
+        <PageRouterMenu className="h-full grow" />
         {barSlot}
       </WindowBar>
       <Sidebar>

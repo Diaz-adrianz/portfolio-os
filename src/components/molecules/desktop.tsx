@@ -1,7 +1,7 @@
 'use client';
 
 import ControlBar from './control-bar';
-import { type ComponentProps, useRef } from 'react';
+import { type ComponentProps, useEffect, useRef } from 'react';
 import { cn } from '@/utils/misc';
 import LaunchBar from './launch-bar';
 import useWindows from '@/hooks/use-windows';
@@ -9,12 +9,21 @@ import Window from './window';
 import { motion, AnimatePresence } from 'motion/react';
 import useSettings from '@/hooks/use-settings';
 import NotificationsOverlay from './notifications-overlay';
+import { useSearchParams } from 'next/navigation';
+import Apps from '../organisms/apps';
 
 const Desktop = ({ className, ...props }: ComponentProps<'div'>) => {
   const layerRef = useRef<HTMLDivElement>(null);
+  const sp = useSearchParams();
 
-  const { windows } = useWindows();
+  const { windows, open } = useWindows();
   const { wallpaper } = useSettings();
+
+  useEffect(() => {
+    const app = sp.get('app'),
+      route = sp.get('route') || undefined;
+    if (app && app in Apps) open(app, route);
+  }, []);
 
   return (
     <div
