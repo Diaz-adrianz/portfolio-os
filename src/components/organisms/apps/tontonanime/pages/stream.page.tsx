@@ -140,7 +140,7 @@ const StreamPage = ({ id }: { id: string }) => {
             </Select>
           </div>
 
-          <div className="bg-background/40 w-full">
+          <div className="bg-background/40 w-full overflow-hidden rounded-xl">
             <div className="mx-auto aspect-video w-full max-w-6xl overflow-hidden">
               {url && (
                 <ReactPlayer
