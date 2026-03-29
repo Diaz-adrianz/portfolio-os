@@ -81,7 +81,7 @@ I’d like to acknowledge the resources and references used in this web. Big tha
 - Dock icons: **[macOS App Icons](https://macosicons.com/)**
 - 2D illustration: **[Undraw](https://undraw.co)**
 
-[Source code](https://github.com/Diaz-adrianz/portfolio-os-v2) available here!
+[Source code](https://github.com/Diaz-adrianz/portfolio-os) available here!
 
 If you have any questions or need more details, feel free to ask! 😊
 `,
@@ -94,7 +94,7 @@ Saya ingin memberikan apresiasi untuk berbagai resource dan referensi yang digun
 - Dock icons: **[macOS App Icons](https://macosicons.com/)**
 - 2D illustration: **[Undraw](https://undraw.co)**
 
-[Kode sumber](https://github.com/Diaz-adrianz/portfolio-os-v2) tersedia!
+[Kode sumber](https://github.com/Diaz-adrianz/portfolio-os) tersedia!
 
 Jika kamu punya pertanyaan atau butuh detail lebih lanjut, jangan ragu untuk bertanya! 😊
 `,
