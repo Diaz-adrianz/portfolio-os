@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/components/molecules/providers/theme.provider';
 import Storage from '@/constants/storage';
 import SettingsProvider from '@/components/molecules/providers/settings.provider';
 import { TooltipProvider } from '@/components/atoms/tooltip';
+import { Analytics } from '@vercel/analytics/next';
 
 const manrope = Manrope({
   variable: '--font-manrope',
@@ -39,6 +40,8 @@ export default function RootLayout({
             <TooltipProvider>{children}</TooltipProvider>
           </SettingsProvider>
         </ThemeProvider>
+
+        <Analytics />
       </body>
     </html>
   );
